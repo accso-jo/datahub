@@ -131,6 +131,7 @@ public class DataHubAuthorizer implements Authorizer {
 
     final List<Urn> authorizedUsers = new ArrayList<>();
     final List<Urn> authorizedGroups = new ArrayList<>();
+    final List<Urn> authorizedRoles = new ArrayList<>();
     boolean allUsers = false;
     boolean allGroups = false;
 
@@ -151,6 +152,7 @@ public class DataHubAuthorizer implements Authorizer {
       // Step 3: For each matching policy, add actors that are authorized.
       authorizedUsers.addAll(matchingActors.getUsers());
       authorizedGroups.addAll(matchingActors.getGroups());
+      authorizedRoles.add(matchingActors.getRoles());
       if (matchingActors.allUsers()) {
         allUsers = true;
       }
@@ -160,7 +162,7 @@ public class DataHubAuthorizer implements Authorizer {
     }
 
     // Step 4: Return all authorized users and groups.
-    return new AuthorizedActors(privilege, authorizedUsers, authorizedGroups, allUsers, allGroups);
+    return new AuthorizedActors(privilege, authorizedUsers, authorizedGroups, authorizedRoles, allUsers, allGroups);
   }
 
   /**
